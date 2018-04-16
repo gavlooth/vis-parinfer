@@ -1,4 +1,4 @@
-local parinfer = require("parinfer_lua_bridge")
+local parinfer = require("libparinferlua")
 local json = require("json")
 require('vis')
 
