@@ -61,3 +61,6 @@ end
 
  parinferOff = vis:action_register("parinferOff", _parinferOff)
  parinferToggleMode = vis:action_register("parinferToggleMode",_parinferToggleMode )
+
+
+vis.events.subscribe(vis.events.WIN_HIGHLIGHT, invoke_parinfer)
