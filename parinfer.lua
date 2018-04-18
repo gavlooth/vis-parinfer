@@ -13,44 +13,21 @@ return json.encode(the_table)
 end
 
 local operate_on_lines = function (old_lines, parinfer_response)
-  local changed_lines = {}
   local n=1
-  if parinfer_response["success"] == true then
-    for s in parinfer_response["text"]:gmatch("([^\n]*)\n?") do
-      if old_lines[n]~=s  then
-        table.insert(changed_lines, {n, s})
-      end
-      n=n+1
-    end
-    local i,v = next(changed_lines,nil)
-    if v~= nil then
-      if vis.mode == vis.modes.NORMAL then
-        vis:feedkeys('u')
-      elseif vis.mode == vis.modes.INSERT then
-        vis:feedkeys('<C-w>')
-      else  vis:feedkeys('u')
-      end
-      while i do
-        old_lines[v[1]] = v[2]
-        i,v = next(changed_lines,i)
-      end
-      vis.win.selection.pos = parinfer_response["cursorX"]
-    end
-  end
+     if parinfer_response["success"] == true then
+       for s in parinfer_response["text"]:gmatch("([^\n]*)\n?") do
+         if old_lines[n]~=s    then
+           old_lines[n]=s
+         end
+         n=n+1
+       end
+       vis.win.selection.pos = parinfer_response["cursorX"]
+     end
 end
 
 
 
 
-      -- if response["success"] == true then
-      --   for s in response["text"]:gmatch("([^\n]*)\n?") do
-      --     if old_lines[n]~=s    then
-      --       old_lines[n]=s
-      --     end
-      --     n=n+1
-      --   end
-      --   vis.win.selection.pos = response["cursorX"]
-      -- end
 
 local flag = 0
 invoke_parinfer = function (win)
